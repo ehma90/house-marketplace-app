@@ -1,4 +1,6 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './component/Navbar'
 import Profile from './pages/Profile'
 import Offer from './pages/Offer'
@@ -14,13 +16,15 @@ function App() {
       <Routes>
         <Route path='/' element={<Explore/>}/>
         <Route path='/offer' element={<Offer/>}/>
-        <Route path='/profile' element={<Profile/>}/>
+        <Route path='/profile' element={<SignIn/>}/>
         <Route path='/sign-in' element={<SignIn/>}/>
         <Route path='/sign-up' element={<SignUp/>}/>
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
       </Routes>
       <Navbar/>
     </Router>
+
+    <ToastContainer/>
     </>
   );
 }
