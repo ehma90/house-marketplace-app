@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import {setDoc, doc, serverTimestamp} from 'firebase/firestore'
 import { db } from "../firebase.config";
 import { ReactComponent as ArrowRightIcon } from "../assets/svg/keyboardArrowRightIcon.svg";
 import visibilityIcon from "../assets/svg/visibilityIcon.svg";
@@ -47,14 +48,19 @@ function SignUp() {
         displayName: name,
       })
 
-      navigate('/')
+      const formDateCopy = {...formData}
+      delete formDateCopy.password;
+      formDateCopy.timestamp = serverTimestamp()
 
+      await setDoc(doc(db, "users", user.uid), formDateCopy)
+
+      navigate('/')
 
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   return (
     <>
       <div className="pageContainer">
@@ -100,7 +106,7 @@ function SignUp() {
           </div>
 
           <Link to="/forgot-password" className="forgotPasswordLink">
-            Forgot Password
+            Forgot Password?
           </Link>
 
           <div className="signUpBar">
@@ -111,7 +117,7 @@ function SignUp() {
           </div>
         </form>
 
-        {/* Google OAuth*/}
+        {/* Google OAuth */}
 
         <Link to="/sign-in" className="registerLink">
           Sign In Instead
