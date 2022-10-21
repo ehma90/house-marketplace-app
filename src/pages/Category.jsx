@@ -12,6 +12,7 @@ import {
 import { db } from "../firebase.config";
 import { toast } from "react-toastify";
 import Spinner from "../component/Spinner";
+import ListingItem from "../component/ListingItem";
 import { async } from "@firebase/util";
 
 function Category() {
@@ -67,13 +68,17 @@ function Category() {
         <Spinner />
       ) : listings && listings.length > 0 ? (
         <>
-        <main>
+          <main>
             <ul className="categorylistings">
-                {listings.map((listing) => (
-                    <h3 key={listing.id}>{listing.data.name}</h3>
-                ))}
+              {listings.map((listing) => (
+                <ListingItem
+                  listing={listing.data}
+                  id={listing.id}
+                  key={listing.id}
+                />
+              ))}
             </ul>
-        </main>
+          </main>
         </>
       ) : (
         <p>No Listing for {param.categoryName}</p>
